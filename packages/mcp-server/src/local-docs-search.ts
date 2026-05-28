@@ -9841,6 +9841,219 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'list',
+    endpoint: '/{accounts_or_zones}/{account_or_zone_id}/custom_csrs',
+    httpMethod: 'get',
+    summary: 'List Custom CSRs',
+    description: 'List all custom Certificate Signing Requests (CSRs) for an account or zone.',
+    stainlessPath: '(resource) custom_csrs > (method) list',
+    qualified: 'client.customCsrs.list',
+    params: ['account_id?: string;', 'zone_id?: string;', 'page?: number;', 'per_page?: number;'],
+    response:
+      "{ id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }",
+    markdown:
+      "## list\n\n`client.customCsrs.list(account_id?: string, zone_id?: string, page?: number, per_page?: number): { id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }`\n\n**get** `/{accounts_or_zones}/{account_or_zone_id}/custom_csrs`\n\nList all custom Certificate Signing Requests (CSRs) for an account or zone.\n\n### Parameters\n\n- `account_id?: string`\n  The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.\n\n- `zone_id?: string`\n  The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.\n\n- `page?: number`\n  Page number of paginated results.\n\n- `per_page?: number`\n  Number of custom CSRs per page.\n\n### Returns\n\n- `{ id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }`\n  A custom Certificate Signing Request (CSR).\n\n  - `id: string`\n  - `created_at: string`\n  - `key_type: 'rsa2048' | 'p256v1'`\n  - `account_tag?: string`\n  - `common_name?: string`\n  - `country?: string`\n  - `csr?: string`\n  - `description?: string`\n  - `locality?: string`\n  - `name?: string`\n  - `organization?: string`\n  - `organizational_unit?: string`\n  - `sans?: string[]`\n  - `state?: string`\n\n### Example\n\n```typescript\nimport Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare();\n\n// Automatically fetches more pages as needed.\nfor await (const customCsrListResponse of client.customCsrs.list({ account_id: 'account_id' })) {\n  console.log(customCsrListResponse);\n}\n```",
+    perLanguage: {
+      node: {
+        method: 'client.customCsrs.list',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const customCsrListResponse of client.customCsrs.list({ account_id: 'account_id' })) {\n  console.log(customCsrListResponse.id);\n}",
+      },
+      typescript: {
+        method: 'client.customCsrs.list',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const customCsrListResponse of client.customCsrs.list({ account_id: 'account_id' })) {\n  console.log(customCsrListResponse.id);\n}",
+      },
+      python: {
+        method: 'custom_csrs.list',
+        example:
+          'import os\nfrom cloudflare import Cloudflare\n\nclient = Cloudflare(\n    api_token=os.environ.get("CLOUDFLARE_API_TOKEN"),  # This is the default and can be omitted\n)\npage = client.custom_csrs.list(\n    account_id="account_id",\n)\npage = page.result[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'customCsrs().list',
+        example:
+          'package com.cloudflare.example;\n\nimport com.cloudflare.client.CloudflareClient;\nimport com.cloudflare.client.okhttp.CloudflareOkHttpClient;\nimport com.cloudflare.models.customcsrs.CustomCsrListPage;\nimport com.cloudflare.models.customcsrs.CustomCsrListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        CloudflareClient client = CloudflareOkHttpClient.fromEnv();\n\n        CustomCsrListPage page = client.customCsrs().list();\n    }\n}',
+      },
+      go: {
+        method: 'client.CustomCsrs.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/cloudflare/cloudflare-go"\n\t"github.com/cloudflare/cloudflare-go/custom_csrs"\n\t"github.com/cloudflare/cloudflare-go/option"\n)\n\nfunc main() {\n\tclient := cloudflare.NewClient(\n\t\toption.WithAPIToken("Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY"),\n\t)\n\tpage, err := client.CustomCsrs.List(context.TODO(), custom_csrs.CustomCsrListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      ruby: {
+        method: 'custom_csrs.list',
+        example:
+          'require "cloudflare"\n\ncloudflare = Cloudflare::Client.new(api_token: "Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY")\n\npage = cloudflare.custom_csrs.list(zone_id: "zone_id")\n\nputs(page)',
+      },
+      http: {
+        example:
+          'curl https://api.cloudflare.com/client/v4/$ACCOUNTS_OR_ZONES/$ACCOUNT_OR_ZONE_ID/custom_csrs \\\n    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/{accounts_or_zones}/{account_or_zone_id}/custom_csrs',
+    httpMethod: 'post',
+    summary: 'Create Custom CSR',
+    description:
+      'Generate a new custom Certificate Signing Request (CSR) for an account or zone. Cloudflare generates and securely stores the private key associated with the CSR.',
+    stainlessPath: '(resource) custom_csrs > (method) create',
+    qualified: 'client.customCsrs.create',
+    params: [
+      'common_name: string;',
+      'country: string;',
+      'locality: string;',
+      'organization: string;',
+      'sans: string[];',
+      'state: string;',
+      'account_id?: string;',
+      'zone_id?: string;',
+      'description?: string;',
+      "key_type?: 'rsa2048' | 'p256v1';",
+      'name?: string;',
+      'organizational_unit?: string;',
+    ],
+    response:
+      "{ id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }",
+    markdown:
+      "## create\n\n`client.customCsrs.create(common_name: string, country: string, locality: string, organization: string, sans: string[], state: string, account_id?: string, zone_id?: string, description?: string, key_type?: 'rsa2048' | 'p256v1', name?: string, organizational_unit?: string): { id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }`\n\n**post** `/{accounts_or_zones}/{account_or_zone_id}/custom_csrs`\n\nGenerate a new custom Certificate Signing Request (CSR) for an account or zone. Cloudflare generates and securely stores the private key associated with the CSR.\n\n### Parameters\n\n- `common_name: string`\n  The common name (domain) for the CSR. Must be at most 64 characters.\n\n- `country: string`\n  Two-letter ISO 3166-1 alpha-2 country code.\n\n- `locality: string`\n  City or locality name.\n\n- `organization: string`\n  Organization name.\n\n- `sans: string[]`\n  Subject Alternative Names for the CSR. At least one SAN is required.\n\n- `state: string`\n  State or province name.\n\n- `account_id?: string`\n  The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.\n\n- `zone_id?: string`\n  The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.\n\n- `description?: string`\n  Optional description for the CSR.\n\n- `key_type?: 'rsa2048' | 'p256v1'`\n  Key algorithm to use for the CSR. Defaults to rsa2048 if not specified.\n\n- `name?: string`\n  Human-readable name for the CSR.\n\n- `organizational_unit?: string`\n  Organizational unit name.\n\n### Returns\n\n- `{ id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }`\n  A custom Certificate Signing Request (CSR).\n\n  - `id: string`\n  - `created_at: string`\n  - `key_type: 'rsa2048' | 'p256v1'`\n  - `account_tag?: string`\n  - `common_name?: string`\n  - `country?: string`\n  - `csr?: string`\n  - `description?: string`\n  - `locality?: string`\n  - `name?: string`\n  - `organization?: string`\n  - `organizational_unit?: string`\n  - `sans?: string[]`\n  - `state?: string`\n\n### Example\n\n```typescript\nimport Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare();\n\nconst customCsr = await client.customCsrs.create({\n  common_name: 'example.com',\n  country: 'US',\n  locality: 'San Francisco',\n  organization: 'Cloudflare, Inc.',\n  sans: ['example.com', 'www.example.com'],\n  state: 'California',\n  account_id: 'account_id',\n});\n\nconsole.log(customCsr);\n```",
+    perLanguage: {
+      node: {
+        method: 'client.customCsrs.create',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\nconst customCsr = await client.customCsrs.create({\n  common_name: 'example.com',\n  country: 'US',\n  locality: 'San Francisco',\n  organization: 'Cloudflare, Inc.',\n  sans: ['example.com', 'www.example.com'],\n  state: 'California',\n  account_id: 'account_id',\n});\n\nconsole.log(customCsr.id);",
+      },
+      typescript: {
+        method: 'client.customCsrs.create',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\nconst customCsr = await client.customCsrs.create({\n  common_name: 'example.com',\n  country: 'US',\n  locality: 'San Francisco',\n  organization: 'Cloudflare, Inc.',\n  sans: ['example.com', 'www.example.com'],\n  state: 'California',\n  account_id: 'account_id',\n});\n\nconsole.log(customCsr.id);",
+      },
+      python: {
+        method: 'custom_csrs.create',
+        example:
+          'import os\nfrom cloudflare import Cloudflare\n\nclient = Cloudflare(\n    api_token=os.environ.get("CLOUDFLARE_API_TOKEN"),  # This is the default and can be omitted\n)\ncustom_csr = client.custom_csrs.create(\n    common_name="example.com",\n    country="US",\n    locality="San Francisco",\n    organization="Cloudflare, Inc.",\n    sans=["example.com", "www.example.com"],\n    state="California",\n    account_id="account_id",\n)\nprint(custom_csr.id)',
+      },
+      java: {
+        method: 'customCsrs().create',
+        example:
+          'package com.cloudflare.example;\n\nimport com.cloudflare.client.CloudflareClient;\nimport com.cloudflare.client.okhttp.CloudflareOkHttpClient;\nimport com.cloudflare.models.customcsrs.CustomCsrCreateParams;\nimport com.cloudflare.models.customcsrs.CustomCsrCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        CloudflareClient client = CloudflareOkHttpClient.fromEnv();\n\n        CustomCsrCreateParams params = CustomCsrCreateParams.builder()\n            .commonName("example.com")\n            .country("US")\n            .locality("San Francisco")\n            .organization("Cloudflare, Inc.")\n            .addSan("example.com")\n            .addSan("www.example.com")\n            .state("California")\n            .build();\n        CustomCsrCreateResponse customCsr = client.customCsrs().create(params);\n    }\n}',
+      },
+      go: {
+        method: 'client.CustomCsrs.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/cloudflare/cloudflare-go"\n\t"github.com/cloudflare/cloudflare-go/custom_csrs"\n\t"github.com/cloudflare/cloudflare-go/option"\n)\n\nfunc main() {\n\tclient := cloudflare.NewClient(\n\t\toption.WithAPIToken("Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY"),\n\t)\n\tcustomCsr, err := client.CustomCsrs.New(context.TODO(), custom_csrs.CustomCsrNewParams{\n\t\tCommonName:   cloudflare.F("example.com"),\n\t\tCountry:      cloudflare.F("US"),\n\t\tLocality:     cloudflare.F("San Francisco"),\n\t\tOrganization: cloudflare.F("Cloudflare, Inc."),\n\t\tSans:         cloudflare.F([]string{"example.com", "www.example.com"}),\n\t\tState:        cloudflare.F("California"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customCsr.ID)\n}\n',
+      },
+      ruby: {
+        method: 'custom_csrs.create',
+        example:
+          'require "cloudflare"\n\ncloudflare = Cloudflare::Client.new(api_token: "Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY")\n\ncustom_csr = cloudflare.custom_csrs.create(\n  common_name: "example.com",\n  country: "US",\n  locality: "San Francisco",\n  organization: "Cloudflare, Inc.",\n  sans: ["example.com", "www.example.com"],\n  state: "California",\n  zone_id: "zone_id"\n)\n\nputs(custom_csr)',
+      },
+      http: {
+        example:
+          'curl https://api.cloudflare.com/client/v4/$ACCOUNTS_OR_ZONES/$ACCOUNT_OR_ZONE_ID/custom_csrs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \\\n    -d \'{\n          "common_name": "example.com",\n          "country": "US",\n          "locality": "San Francisco",\n          "organization": "Cloudflare, Inc.",\n          "sans": [\n            "example.com",\n            "www.example.com"\n          ],\n          "state": "California",\n          "description": "CSR for example.com wildcard",\n          "key_type": "rsa2048",\n          "name": "My Custom CSR",\n          "organizational_unit": "Engineering"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/{accounts_or_zones}/{account_or_zone_id}/custom_csrs/{custom_csr_id}',
+    httpMethod: 'get',
+    summary: 'Custom CSR Details',
+    description: 'Retrieve details for a specific custom Certificate Signing Request (CSR).',
+    stainlessPath: '(resource) custom_csrs > (method) get',
+    qualified: 'client.customCsrs.get',
+    params: ['custom_csr_id: string;', 'account_id?: string;', 'zone_id?: string;'],
+    response:
+      "{ id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }",
+    markdown:
+      "## get\n\n`client.customCsrs.get(custom_csr_id: string, account_id?: string, zone_id?: string): { id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }`\n\n**get** `/{accounts_or_zones}/{account_or_zone_id}/custom_csrs/{custom_csr_id}`\n\nRetrieve details for a specific custom Certificate Signing Request (CSR).\n\n### Parameters\n\n- `custom_csr_id: string`\n  Custom CSR identifier tag.\n\n- `account_id?: string`\n  The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.\n\n- `zone_id?: string`\n  The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.\n\n### Returns\n\n- `{ id: string; created_at: string; key_type: 'rsa2048' | 'p256v1'; account_tag?: string; common_name?: string; country?: string; csr?: string; description?: string; locality?: string; name?: string; organization?: string; organizational_unit?: string; sans?: string[]; state?: string; }`\n  A custom Certificate Signing Request (CSR).\n\n  - `id: string`\n  - `created_at: string`\n  - `key_type: 'rsa2048' | 'p256v1'`\n  - `account_tag?: string`\n  - `common_name?: string`\n  - `country?: string`\n  - `csr?: string`\n  - `description?: string`\n  - `locality?: string`\n  - `name?: string`\n  - `organization?: string`\n  - `organizational_unit?: string`\n  - `sans?: string[]`\n  - `state?: string`\n\n### Example\n\n```typescript\nimport Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare();\n\nconst customCsr = await client.customCsrs.get('7b163417-1d2b-4c84-a38a-2fb7a0cd7752', { account_id: 'account_id' });\n\nconsole.log(customCsr);\n```",
+    perLanguage: {
+      node: {
+        method: 'client.customCsrs.get',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\nconst customCsr = await client.customCsrs.get('7b163417-1d2b-4c84-a38a-2fb7a0cd7752', {\n  account_id: 'account_id',\n});\n\nconsole.log(customCsr.id);",
+      },
+      typescript: {
+        method: 'client.customCsrs.get',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\nconst customCsr = await client.customCsrs.get('7b163417-1d2b-4c84-a38a-2fb7a0cd7752', {\n  account_id: 'account_id',\n});\n\nconsole.log(customCsr.id);",
+      },
+      python: {
+        method: 'custom_csrs.get',
+        example:
+          'import os\nfrom cloudflare import Cloudflare\n\nclient = Cloudflare(\n    api_token=os.environ.get("CLOUDFLARE_API_TOKEN"),  # This is the default and can be omitted\n)\ncustom_csr = client.custom_csrs.get(\n    custom_csr_id="7b163417-1d2b-4c84-a38a-2fb7a0cd7752",\n    account_id="account_id",\n)\nprint(custom_csr.id)',
+      },
+      java: {
+        method: 'customCsrs().get',
+        example:
+          'package com.cloudflare.example;\n\nimport com.cloudflare.client.CloudflareClient;\nimport com.cloudflare.client.okhttp.CloudflareOkHttpClient;\nimport com.cloudflare.models.customcsrs.CustomCsrGetParams;\nimport com.cloudflare.models.customcsrs.CustomCsrGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        CloudflareClient client = CloudflareOkHttpClient.fromEnv();\n\n        CustomCsrGetResponse customCsr = client.customCsrs().get("7b163417-1d2b-4c84-a38a-2fb7a0cd7752");\n    }\n}',
+      },
+      go: {
+        method: 'client.CustomCsrs.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/cloudflare/cloudflare-go"\n\t"github.com/cloudflare/cloudflare-go/custom_csrs"\n\t"github.com/cloudflare/cloudflare-go/option"\n)\n\nfunc main() {\n\tclient := cloudflare.NewClient(\n\t\toption.WithAPIToken("Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY"),\n\t)\n\tcustomCsr, err := client.CustomCsrs.Get(\n\t\tcontext.TODO(),\n\t\t"7b163417-1d2b-4c84-a38a-2fb7a0cd7752",\n\t\tcustom_csrs.CustomCsrGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customCsr.ID)\n}\n',
+      },
+      ruby: {
+        method: 'custom_csrs.get',
+        example:
+          'require "cloudflare"\n\ncloudflare = Cloudflare::Client.new(api_token: "Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY")\n\ncustom_csr = cloudflare.custom_csrs.get("7b163417-1d2b-4c84-a38a-2fb7a0cd7752", zone_id: "zone_id")\n\nputs(custom_csr)',
+      },
+      http: {
+        example:
+          'curl https://api.cloudflare.com/client/v4/$ACCOUNTS_OR_ZONES/$ACCOUNT_OR_ZONE_ID/custom_csrs/$CUSTOM_CSR_ID \\\n    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"',
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/{accounts_or_zones}/{account_or_zone_id}/custom_csrs/{custom_csr_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Custom CSR',
+    description: 'Delete a custom Certificate Signing Request (CSR) and its associated private key.',
+    stainlessPath: '(resource) custom_csrs > (method) delete',
+    qualified: 'client.customCsrs.delete',
+    params: ['custom_csr_id: string;', 'account_id?: string;', 'zone_id?: string;'],
+    response: '{ id?: string; }',
+    markdown:
+      "## delete\n\n`client.customCsrs.delete(custom_csr_id: string, account_id?: string, zone_id?: string): { id?: string; }`\n\n**delete** `/{accounts_or_zones}/{account_or_zone_id}/custom_csrs/{custom_csr_id}`\n\nDelete a custom Certificate Signing Request (CSR) and its associated private key.\n\n### Parameters\n\n- `custom_csr_id: string`\n  Custom CSR identifier tag.\n\n- `account_id?: string`\n  The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.\n\n- `zone_id?: string`\n  The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.\n\n### Returns\n\n- `{ id?: string; }`\n\n  - `id?: string`\n\n### Example\n\n```typescript\nimport Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare();\n\nconst customCsr = await client.customCsrs.delete('7b163417-1d2b-4c84-a38a-2fb7a0cd7752', { account_id: 'account_id' });\n\nconsole.log(customCsr);\n```",
+    perLanguage: {
+      node: {
+        method: 'client.customCsrs.delete',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\nconst customCsr = await client.customCsrs.delete('7b163417-1d2b-4c84-a38a-2fb7a0cd7752', {\n  account_id: 'account_id',\n});\n\nconsole.log(customCsr.id);",
+      },
+      typescript: {
+        method: 'client.customCsrs.delete',
+        example:
+          "import Cloudflare from 'cloudflare';\n\nconst client = new Cloudflare({\n  apiToken: process.env['CLOUDFLARE_API_TOKEN'], // This is the default and can be omitted\n});\n\nconst customCsr = await client.customCsrs.delete('7b163417-1d2b-4c84-a38a-2fb7a0cd7752', {\n  account_id: 'account_id',\n});\n\nconsole.log(customCsr.id);",
+      },
+      python: {
+        method: 'custom_csrs.delete',
+        example:
+          'import os\nfrom cloudflare import Cloudflare\n\nclient = Cloudflare(\n    api_token=os.environ.get("CLOUDFLARE_API_TOKEN"),  # This is the default and can be omitted\n)\ncustom_csr = client.custom_csrs.delete(\n    custom_csr_id="7b163417-1d2b-4c84-a38a-2fb7a0cd7752",\n    account_id="account_id",\n)\nprint(custom_csr.id)',
+      },
+      java: {
+        method: 'customCsrs().delete',
+        example:
+          'package com.cloudflare.example;\n\nimport com.cloudflare.client.CloudflareClient;\nimport com.cloudflare.client.okhttp.CloudflareOkHttpClient;\nimport com.cloudflare.models.customcsrs.CustomCsrDeleteParams;\nimport com.cloudflare.models.customcsrs.CustomCsrDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        CloudflareClient client = CloudflareOkHttpClient.fromEnv();\n\n        CustomCsrDeleteResponse customCsr = client.customCsrs().delete("7b163417-1d2b-4c84-a38a-2fb7a0cd7752");\n    }\n}',
+      },
+      go: {
+        method: 'client.CustomCsrs.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/cloudflare/cloudflare-go"\n\t"github.com/cloudflare/cloudflare-go/custom_csrs"\n\t"github.com/cloudflare/cloudflare-go/option"\n)\n\nfunc main() {\n\tclient := cloudflare.NewClient(\n\t\toption.WithAPIToken("Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY"),\n\t)\n\tcustomCsr, err := client.CustomCsrs.Delete(\n\t\tcontext.TODO(),\n\t\t"7b163417-1d2b-4c84-a38a-2fb7a0cd7752",\n\t\tcustom_csrs.CustomCsrDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", customCsr.ID)\n}\n',
+      },
+      ruby: {
+        method: 'custom_csrs.delete',
+        example:
+          'require "cloudflare"\n\ncloudflare = Cloudflare::Client.new(api_token: "Sn3lZJTBX6kkg7OdcBUAxOO963GEIyGQqnFTOFYY")\n\ncustom_csr = cloudflare.custom_csrs.delete("7b163417-1d2b-4c84-a38a-2fb7a0cd7752", zone_id: "zone_id")\n\nputs(custom_csr)',
+      },
+      http: {
+        example:
+          'curl https://api.cloudflare.com/client/v4/$ACCOUNTS_OR_ZONES/$ACCOUNT_OR_ZONE_ID/custom_csrs/$CUSTOM_CSR_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"',
+      },
+    },
+  },
+  {
+    name: 'list',
     endpoint: '/zones/{zone_id}/custom_hostnames',
     httpMethod: 'get',
     summary: 'List Custom Hostnames',

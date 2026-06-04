@@ -260,7 +260,7 @@ export interface ErrorData {
 
   message?: string;
 
-  source?: ErrorData.Source;
+  source?: Data.Source;
 }
 
 export namespace ErrorData {
@@ -862,7 +862,7 @@ export namespace Token {
       /**
        * List of IPv4/IPv6 CIDR addresses.
        */
-      in?: Array<Shared.TokenConditionCIDRList>;
+      in?: Ac<Shared.TokenConditionCIDRList>;
 
       /**
        * List of IPv4/IPv6 CIDR addresses.
@@ -896,7 +896,7 @@ export interface TokenPolicy {
   /**
    * A set of permission groups that are specified to the policy.
    */
-  permission_groups: Array<TokenPolicy.PermissionGroup>;
+  permission_groups: Arry<TokenPolicy.PermissionGroup>;
 
   /**
    * A list of resource names that the policy applies to.
